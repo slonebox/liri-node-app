@@ -4,6 +4,8 @@ var keys = require("./keys.js");
 var fs = require("fs");
 var Spotify = require('node-spotify-api');
 
+var divider = "____________________________\n";
+
 var spotify = new Spotify(keys.spotify);
 
 // var bandsInTown = new bandsInTown(keys.bandsInTown);
@@ -23,7 +25,6 @@ switch (action) {
         //concertThis(item);
         break;
     case 'spotify-this-song':
-        console.log("Before Spotify " + item);
         spotifyThis(item);
         break;
     case "movie-this":
@@ -51,7 +52,24 @@ function spotifyThis(input) {
             if (err) {
                 return console.log("Error occurred: " + err);
             } 
-            console.log(data.tracks.items);
+            //Prints 3 songs' data to the console
+            console.log("\nRESULTS");
+            console.log(divider);
+            console.log("Song: " + data.tracks.items[0].name);
+            console.log("Artist: " + data.tracks.items[0].artists[0].name);
+            console.log("Album: " + data.tracks.items[0].album.name);
+            console.log("Preview: " + data.tracks.items[0].preview_url)
+            console.log(divider);
+            console.log("Song: " + data.tracks.items[1].name);
+            console.log("Artist: " + data.tracks.items[1].artists[0].name);
+            console.log("Album: " + data.tracks.items[1].album.name);
+            console.log("Preview: " + data.tracks.items[1].preview_url);
+            console.log(divider);
+            console.log("Song: " + data.tracks.items[2].name);
+            console.log("Artist: " + data.tracks.items[2].artists[0].name);
+            console.log("Album: " + data.tracks.items[2].album.name);
+            console.log("Preview: " + data.tracks.items[2].preview_url)
+            console.log("")
         });
 };
 
