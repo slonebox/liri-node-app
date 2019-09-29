@@ -31,10 +31,10 @@ switch (action) {
         movieThis(item);
         break;
     case "do-what-it-says":
-        //doWhat(item);
+        doWhat();
         break;
     default:
-        console.log("Default case");
+        spotifyThis("The Sign");
 };
 
 // function concertThis(input) {
@@ -118,6 +118,26 @@ function movieThis(input) {
 
 };
 
-    // function doWhat(input) {
+    function doWhat() {
+        fs.readFile("random.txt", "utf8", function(error, data) {
 
-    // };
+            if (error) {
+              return console.log(error);
+            } else { 
+
+            dataArr = data.split(",");
+
+            if (dataArr[0] === "spotify-this-song") {
+                spotifyThis(dataArr[1]);
+            } else if (dataArr[0] === "movie-this") {
+                movieThis(dataArr[1]);
+            } else if (dataArr[0] === "concert-this") {
+                concertThis(dataArr[1]);
+            } else spotifyThis("The Sign");
+
+        }
+
+            
+    });
+
+};
