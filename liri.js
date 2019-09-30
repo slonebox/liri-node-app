@@ -4,10 +4,11 @@ var keys = require("./keys.js");
 var fs = require("fs");
 var Spotify = require('node-spotify-api');
 var axios = require('axios');
-// var bandsInTown = require('bandsintown')(bandsInTownID);
+var bandsInTown = require('bandsintown')(bandsInTownID);
 var divider = "____________________________\n";
 
 var spotify = new Spotify(keys.spotify);
+var bandsInTownID = new bandsInTown(keys.bandsInTownID);
 // var bandsInTownID = new bandsIntown (bandsInTownID);
 
 // var axios = new axios(keys.axios);
@@ -37,22 +38,22 @@ switch (action) {
         spotifyThis("The Sign");
 };
 
-// function concertThis(input) {
-//     bandsInTown.getArtistEventList(input).then(function(err, events){
-//         if (err) {
-//             throw console.log(err);
-//         }
-//         console.log(events);
-//     });
-//     console.log("You called the concertThis function!");
-// };
+function concertThis(input) {
+    bandsInTown.getArtistEventList(input).then(function (events) {
+        if (err) {
+            throw console.log(err);
+        }
+        console.log(events);
+    });
+    console.log("You called the concertThis function!");
+};
 
 function spotifyThis(input) {
     spotify.search(
         {
             type: "track",
             query: input,
-            limit: 3
+            limit: 10
         },
         function (err, data) {
             if (err) {
@@ -84,7 +85,6 @@ function movieThis(input) {
 
     axios.get(queryUrl).then(
         function (response) {
-            console.log(response.data);
             console.log("\nRESULTS");
             console.log(divider);
             console.log("Title: " + response.data.Title);
@@ -115,15 +115,14 @@ function movieThis(input) {
             }
             console.log(error.config);
         });
-
 };
 
-    function doWhat() {
-        fs.readFile("random.txt", "utf8", function(error, data) {
+function doWhat() {
+    fs.readFile("random.txt", "utf8", function (error, data) {
 
-            if (error) {
-              return console.log(error);
-            } else { 
+        if (error) {
+            return console.log(error);
+        } else {
 
             dataArr = data.split(",");
 
@@ -133,11 +132,12 @@ function movieThis(input) {
                 movieThis(dataArr[1]);
             } else if (dataArr[0] === "concert-this") {
                 concertThis(dataArr[1]);
-            } else spotifyThis("The Sign");
+            } else spotifyThis("The Sign by Ace of Base");
 
         }
 
-            
+
     });
 
 };
+
